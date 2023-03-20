@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  pageExtensions: ['page.tsx'],
+  // pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
   // webpack: (config, { isServer }) => {
   //   if (isServer) {
   //     const antStyles = /antd\/.*?\/style.*?/
@@ -24,7 +24,16 @@ const nextConfig = {
   //     })
   //   }
   //   return config
-  // }
+  // },
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: '/',
+  //       destination: '/home',
+  //       permanent: true,
+  //     },
+  //   ]
+  // },
 }
 
 module.exports = nextConfig
