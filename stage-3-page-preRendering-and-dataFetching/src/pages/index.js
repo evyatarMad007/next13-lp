@@ -1,25 +1,21 @@
+import { isAdmin } from "@/guards/isAdmin";
 import React from "react";
 
 const HomePage = (props) => {
-  
+  const { products } = props;
   return (
     <div>
       <ul>
-        {props?.products?.map((product) => {
+        {products?.map((product) => {
           return <li key={product.id}>{product.title}</li>;
         })}
       </ul>
-
-      {/* <ul>
-        {props?.data?.map((country) => {
-          return <li key={country.cca3}>{country.name.common}</li>;
-        })}
-      </ul> */}
     </div>
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps = async (context) => {
+  console.log("Generating Static Props");
   const fs = require("fs/promises");
   const path = require("path");
 
@@ -28,16 +24,19 @@ export async function getStaticProps() {
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData);
 
+  const userData = {
+    isAdmin: true,
+  }
 
-  // external API call
-  // const response = await fetch("https://restcountries.com/v3.1/all");
-  // const countries = await response.json();
+  isAdmin(userData, '/products');
+
 
   return {
     props: {
-      // countries,
       products: data.products
     },
+    revalidate: 10, // in seconds only works in production mode
+    // notFound: true, // if true, it will return 404 page
   };
 }
 
