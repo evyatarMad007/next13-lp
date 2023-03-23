@@ -35,9 +35,10 @@ export const getStaticProps = async (context) => {
     props: {
       products: data.products
     },
-    revalidate: 10, // in seconds only works in production mode
+    revalidate: 10, // thats mean the function getStaticProps() will be called every 10 seconds, but only its the user refresh the page he can see the changes, and if he doesn't refresh the page he will see the old data if he visit the page again after 10 seconds
     // notFound: true, // if true, it will return 404 page
   };
 }
+
 
 export default HomePage;
