@@ -4,7 +4,7 @@ import React from 'react'
 
 // @ page info.
 // Access Page: Public
-// SEO friendly: Yes
+// SEO friendly: Yes, priority 2
 // Page Type: Static Page
 
 // @ page pre-rendering
