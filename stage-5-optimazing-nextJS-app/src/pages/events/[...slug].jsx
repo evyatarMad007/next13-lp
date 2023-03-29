@@ -22,27 +22,44 @@ const FilterEventsPage = () => {
   const [loadedEvents, setLoadedEvents] = useState();
   const router = useRouter();
   const filterData = router.query.slug;
-  const { data, error } = useSWR('https://nextjs-course-15a8a-default-rtdb.firebaseio.com/events.json',
-  (url) => fetch(url).then(res => res.json()));
+  const { data, error } = useSWR(
+    "https://nextjs-course-15a8a-default-rtdb.firebaseio.com/events.json",
+    (url) => fetch(url).then((res) => res.json())
+  );
 
   useEffect(() => {
     if (data) {
       const events = [];
 
       for (const key in data) {
-          events.push({
-              id: key,
-              ...data[key]
-          });
+        events.push({
+          id: key,
+          ...data[key],
+        });
       }
 
       setLoadedEvents(events);
     }
-  }, [data])
-  
+  }, [data]);
 
+  let pageHeadData = (
+    <Head>
+      <title>Filtered Events</title>
+      <meta
+        name="description"
+        content={`A list of filtered events.`}
+      />
+    </Head>
+  );
+
+  
   if (!loadedEvents) {
-    return <p className="center">Loading...</p>;
+    return (
+      <>
+        {pageHeadData}
+        <p className="center">Loading...</p>
+      </>
+    );
   }
 
   const filteredYear = filterData[0];
@@ -51,17 +68,28 @@ const FilterEventsPage = () => {
   const numYear = +filteredYear;
   const numMonth = +filteredMonth;
 
+  pageHeadData = (
+    <Head>
+      <title>Filtered Events</title>
+      <meta
+        name="description"
+        content={`All events for ${numMonth}/${numYear}`}
+      />
+    </Head>
+  );
+
   if (
     isNaN(numYear) ||
     isNaN(numMonth) ||
     numYear > 2030 ||
     numYear < 2021 ||
     numMonth < 1 ||
-    numMonth > 12 || 
+    numMonth > 12 ||
     error
   ) {
     return (
       <>
+        {pageHeadData}
         <ErrorAlert>
           <p>Invalid Filter. Please adjust your values!</p>
         </ErrorAlert>
@@ -74,13 +102,16 @@ const FilterEventsPage = () => {
 
   const filteredEvents = loadedEvents.filter((event) => {
     const eventDate = new Date(event.date);
-    return eventDate.getFullYear() === numYear && eventDate.getMonth() === numMonth - 1;
+    return (
+      eventDate.getFullYear() === numYear &&
+      eventDate.getMonth() === numMonth - 1
+    );
   });
-
 
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <>
+      {pageHeadData}
         <ErrorAlert>
           <p>No events found for the chosen filter!</p>
         </ErrorAlert>
@@ -95,16 +126,12 @@ const FilterEventsPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Filtered Events</title>
-        <meta name="description" content={`All events for ${numMonth}/${numYear}`} />
-      </Head>
+      {pageHeadData}
       <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
     </>
   );
 };
-
 
 // export async function getServerSideProps(context) {
 //   const { params } = context;
@@ -113,7 +140,7 @@ const FilterEventsPage = () => {
 //   const filteredYear = filterData[0]; // 2021
 //   const filteredMonth = filterData[1]; // 12
 //   // +variable say to convert the string to number
-//   const numYear = +filteredYear; 
+//   const numYear = +filteredYear;
 //   const numMonth = +filteredMonth;
 
 //   if (
