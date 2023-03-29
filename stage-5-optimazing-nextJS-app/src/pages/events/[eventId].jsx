@@ -5,6 +5,7 @@ import EventLogistics from "@/components/events/EventDetail/EventLogistics/Event
 import EventContent from "@/components/events/EventDetail/EventContent/EventContent";
 import ErrorAlert from "@/components/events/ErrorAlert/ErrorAlert";
 import Button from "@/components/ui/button/Button";
+import Head from "next/head";
 
 // @ page info.
 // Access Page: Public
@@ -30,6 +31,10 @@ const EventDetailPage = (props) => {
 
   return (
     <div>
+      <Head>
+        <title>{event.title}</title>
+        <meta name="description" content={event.description} />
+      </Head>
       <EventSummary title={event.title} />
       <EventLogistics
         date={event.date}

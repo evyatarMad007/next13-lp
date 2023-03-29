@@ -6,6 +6,7 @@ import { getFilteredEvents } from "@/helpers/api-util";
 import ResultsTitle from "@/components/events/EventDetail/ResultsTitle/ResultsTitle";
 import ErrorAlert from "@/components/events/ErrorAlert/ErrorAlert";
 import Button from "@/components/ui/button/Button";
+import Head from "next/head";
 
 // @ page info.
 // Access Page: Public
@@ -94,6 +95,10 @@ const FilterEventsPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Filtered Events</title>
+        <meta name="description" content={`All events for ${numMonth}/${numYear}`} />
+      </Head>
       <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
     </>
