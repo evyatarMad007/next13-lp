@@ -1,41 +1,11 @@
-import EventList from "@/components/events/EventList/EventList";
-import { getFeaturedEvents } from "@/helpers/api-util";
-import React from "react";
-import Head from "next/head";
+import React from 'react'
 
-// @ page info.
-// Access Page: Public
-// SEO friendly: Yes, priority 2
-// Page Type: Static Page
-
-// @ page pre-rendering
-// Goal: we want to pre-render the page at build time
-// Rendering type: SSG (Static Site Generation)
-// technique: getStaticProps (function)
-const HomePage = (props) => {
+const HomePage = () => {
   return (
     <div>
-      <Head>
-        <title>NextJS Events</title>
-        <meta
-          name="description"
-          content="Find a lot of great events that allow you to evolve..."
-        />
-      </Head>
-      <EventList items={props.events} />
+      <h1>The Home Page</h1>
     </div>
-  );
-};
-
-export async function getStaticProps() {
-  const featuredEvents = await getFeaturedEvents();
-
-  return {
-    props: {
-      events: featuredEvents,
-    },
-    revalidate: 1800,
-  };
+  )
 }
 
-export default HomePage;
+export default HomePage
