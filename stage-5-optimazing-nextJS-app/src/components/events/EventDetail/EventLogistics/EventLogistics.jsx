@@ -1,5 +1,4 @@
-
-
+import Image from 'next/image';
 import DateIcon from '@/components/icons/date-icon';
 import classes from './EventLogistics.module.css';
 import AddressIcon from '@/components/icons/address-icon';
@@ -18,7 +17,7 @@ function EventLogistics(props) {
   return (
     <section className={classes.logistics}>
       <div className={classes.image}>
-        <img src={`/${image}`} alt={imageAlt} />
+        <Image src={`/${image}`} alt={imageAlt} width={250} height={160}/>
       </div>
       <ul className={classes.list}>
         <LogisticsItem icon={DateIcon}>
